@@ -10,7 +10,12 @@ class Game:
         return door  
     
     def create_room(self, id):
-        return Room(id)
+        room=Room(id)
+        room.north=self.create_wall()
+        room.south=self.create_wall()
+        room.east=self.create_wall()
+        room.west=self.create_wall()
+        return room
 
     def create_maze(self):
         return Maze()
@@ -48,22 +53,49 @@ class MapElement:
     def entrar(self):
         pass
 
-class Maze(MapElement):
+
+class Hoja(MapElement):
+    def accept(self, visitor):
+        visitor.visit_hoja(self)
+
+class Contenedor(MapElement):
+    def __init__(self) -> None:
+        self.hijos = []
+        
+    def agregarHijo(self, hijo):
+        self.hijos.append(hijo)
+        
+    def eliminarHijo(self, hijo):
+        self.hijos.remove(hijo)
+
+
+class Decorator(Hoja):
+    def __init__(self, component):
+        self.component = component
+
+class Maze(Contenedor):
     def __init__(self):
         self.rooms = []
     
     def addRoom(self, room):
         self.rooms.append(room)
+
+  #  def agregarHijo(self, hijo):
+  #      self.hijos.append(hijo)
+
+ #   def eliminarHijo(self, hijo):
+  #      self.hijos.remove(hijo)
     
     def entrar(self):
-        self.rooms[0].entrar()  
+        self.rooms[0].entrar()
 
-class Room(MapElement):
+
+class Room(Contenedor):
     def __init__(self,id):
-        self.north = Wall()
-        self.east = Wall()
-        self.west = Wall()
-        self.south = Wall()
+        self.north = None
+        self.east = None
+        self.west = None
+        self.south = None
         self.id = id
     
     def entrar(self):
@@ -95,6 +127,12 @@ class BombedWall(Wall):
         else:
             return super().entrar()
 
+game= Game()
+game.make2RoomsMaze()
+game.maze.entrar()
+
+game=Game()
+game.make2RoomsMazeFM() 
     
 game=BombedGame()
 game.make2RoomsMazeFM()
