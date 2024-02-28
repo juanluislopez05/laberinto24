@@ -42,6 +42,12 @@ class Game:
         room1.south = door
         room2.north = door
         return self.maze
+    def activarBombas(self):
+        def activar_si_bomba(elemento):
+            if elemento.esBomba():
+                elemento.activar()
+
+        self.laberinto.recorrer(activar_si_bomba)
 
 class BombedGame(Game):
     def create_wall(self):
@@ -52,14 +58,19 @@ class MapElement:
         pass
     def entrar(self):
         pass
+    def recorrer (self):
+        pass 
 
 
 class Hoja(MapElement):
     def accept(self, visitor):
         visitor.visit_hoja(self)
+    def recorrer(self, unBloque):
+        unBloque.value = self
 
 class Contenedor(MapElement):
-    def __init__(self) -> None:
+
+    def __init__(self):
         self.hijos = []
         
     def agregarHijo(self, hijo):
@@ -67,6 +78,11 @@ class Contenedor(MapElement):
         
     def eliminarHijo(self, hijo):
         self.hijos.remove(hijo)
+        
+    def recorrer(self, unBloque):
+        unBloque.value = self 
+        for each in self.hijos:
+            each.recorrer(unBloque)
 
 
 class Decorator(Hoja):
@@ -88,6 +104,10 @@ class Maze(Contenedor):
     
     def entrar(self):
         self.rooms[0].entrar()
+        
+    def numeroHabitaciones(self):
+        return len(self.rooms)
+
 
 
 class Room(Contenedor):
@@ -106,11 +126,16 @@ class Door(MapElement):
         self.side1 = side1
         self.side2 = side2
         self.opened = False
+        
+    def esPuerta(self):
+        return True
+    
     def entrar(self):
         if self.opened:
             self.side2.entrar()
         else:
             print("The door is locked")
+
     
 class Wall(MapElement):
     def __init__(self):
@@ -126,6 +151,68 @@ class BombedWall(Wall):
             print("the bomb has detonated")
         else:
             return super().entrar()
+        
+class Bomba(Decorator):
+
+  def __init__(self, component):
+    super().__init__(component)
+    self.activa = False
+
+  def activar(self):
+    self.activa = True
+
+  def desactivar(self):
+    self.activa = False
+
+  def esBomba(self):
+    return True
+
+  def entrar(self):
+    if self.activa:
+      print("La bomba ha explotado!")
+    else:
+      # em puede ser None
+      if self.component:
+        self.component.entrar()
+        
+class Bicho:
+
+    def __init__(self, modo, vidas, poder, posicion):
+        self.modo = modo 
+        self.vidas = vidas
+        self.poder = poder 
+        self.posicion = posicion
+class Modo:
+
+  def caminar(self, bicho):
+    
+    
+    posicion_actual = bicho.posicion
+    
+    # Obtener orientaciones posibles
+    orientaciones = [norte, sur, este, oeste]
+    
+    # Elegir orientación al azar
+    import random
+    orientacion = random.choice(orientaciones)
+    
+    # Caminar en esa orientación
+    if orientacion == norte:
+      bicho.posicion[1] += 1
+    elif orientacion == sur:
+      bicho.posicion[1] -= 1
+    # y así con este y oeste
+      
+    print(f"El bicho camina hacia {orientacion}")
+
+  def actua(self, bicho):
+    self.caminar(bicho)
+
+class Agresivo(Modo):
+  pass
+
+class Perezoso(Modo):
+  pass
 
 game= Game()
 game.make2RoomsMaze()
