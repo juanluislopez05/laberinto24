@@ -44,6 +44,19 @@ class Room(Contenedor):
         print("You enter room", self.id)
     def esHabitacion(self):
         return True
+        
+    def ponerEn(self, unaOrientacion, unEM):
+        if unaOrientacion == Norte():
+            self.north = unEM
+        elif unaOrientacion == Este():
+            self.east = unEM
+        elif unaOrientacion == Oeste():
+            self.west = unEM
+        elif unaOrientacion == Sur():
+            self.south = unEM
+        else:
+            print("Orientación inválida")
+
 class Maze(Contenedor):
     def __init__(self):
         self.rooms = []
@@ -129,11 +142,11 @@ class Door(MapElement):
             print("The door is locked")
 class Bicho:
 
-    def __init__(self, modo, vidas, poder, posicion):
-        self.modo = modo
-        self.vidas = vidas 
-        self.poder = poder
-        self.posicion = posicion
+    def __init__(self):
+        self.modo = None
+        self.vidas = None
+        self.poder = None
+        self.posicion = None
         
     def actua(self):
         self.modo.actua(self)
@@ -173,7 +186,30 @@ class Agresivo(Modo):
 class Perezoso(Modo):
   pass
 
+class Orientacion:
 
+    def poner_elemento(self, un_em, un_contenedor):
+        pass
+
+class Este(Orientacion):
+
+    def poner_elemento(self, un_em, un_contenedor):
+        un_contenedor.este = un_em
+
+class Norte(Orientacion):
+    
+    def poner_elemento(self, un_em, un_contenedor):
+        un_contenedor.norte = un_em
+
+class Oeste(Orientacion):
+
+    def poner_elemento(self, un_em, un_contenedor):
+        un_contenedor.oeste = un_em
+
+class Sur(Orientacion):
+
+    def poner_elemento(self, un_em, un_contenedor):
+        un_contenedor.sur = un_em
 class Game:
     def __init__(self):
         self.maze = None
@@ -190,7 +226,7 @@ class Game:
         return Wall()
     
     def agregarBicho(self, unBicho):
-        self.bichos.add(unBicho)
+        self.bichos.append(unBicho)
 
     def eliminarBicho(self, unBicho):
         if unBicho in self.bichos:
@@ -217,14 +253,14 @@ class Game:
         return bicho
 
 
-    # def fabricarHabitacion(self, unNum):
-    #     hab = Habitacion()
-    #     hab.num = unNum
-    #     hab.ponerEn(Norte(), self.fabricarPared())
-    #     hab.ponerEn(Este(), self.fabricarPuerta())
-    #     hab.ponerEn(Sur(), self.fabricarPuerta())
-    #     hab.ponerEn(Oeste(), self.fabricarPared())
-    #     return hab
+    def fabricarHabitacion(self, unNum):
+        hab = Room()
+        hab.num = unNum
+        hab.ponerEn(Norte(), self.create_wall())
+        hab.ponerEn(Este(), self.create_door())
+        hab.ponerEn(Sur(), self.create_door())
+        hab.ponerEn(Oeste(), self.create_wall())
+        return hab
     
     def create_door(self,side1,side2):
         door=Door(side1,side2)
@@ -242,6 +278,16 @@ class Game:
         return Maze()
     def create_bomb(self):
         return Bomba(None)
+        
+    def obtenerHabitacion(self, unNum):
+        return self.laberinto.obtenerHabitacion(unNum)
+        
+    def fabricarPuertaLado1(unaHab1, unaHab2):
+        puerta = Door(unaHab1, unaHab2)
+        puerta.side1=unaHab1
+        puerta.side2=unaHab2
+        return puerta
+
 
     def make2RoomsMazeFM(self):
         self.maze = self.create_maze()
@@ -292,10 +338,10 @@ class Game:
         hab3 = self.create_room(3)
         hab4 = self.create_room(4)
         
-        p12 = self.create_door()
-        p13 = self.create_door()
-        p34 = self.create_door() 
-        p24 = self.create_door()
+        p12 = self.create_door(hab1,hab2)
+        p13 = self.create_door(hab1,hab3)
+        p34 = self.create_door(hab3, hab4) 
+        p24 = self.create_door(hab2, hab4)
 
         p12.side1 = hab1
         p12.side2 = hab2
@@ -327,11 +373,11 @@ class Game:
         self.laberinto.addRoom(hab3)
         self.laberinto.addRoom(hab4)
 
-        self.add_monster(self.create_aggressive_monster(hab1))
-        self.add_monster(self.create_aggressive_monster(hab3))
+        self.agregarBicho(self.fabricarBichoAgresivo(hab1))
+        self.agregarBicho(self.fabricarBichoAgresivo(hab3))
 
-        self.add_monster(self.create_lazy_monster(hab2))
-        self.add_monster(self.create_lazy_monster(hab4))
+        self.agregarBicho(self.fabricarBichoPerezoso(hab2))
+        self.agregarBicho(self.fabricarBichoPerezoso(hab4))
 
 
 
@@ -356,3 +402,6 @@ game.maze.entrar()
 
 game=BombedGame()
 game.fabricarLaberinto2Habitaciones2BombasFM()
+
+game= Game()
+game.fabricarLaberinto4Habitaciones4BichosFM()
