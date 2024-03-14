@@ -1,0 +1,45 @@
+import unittest
+from laberinto import Room
+from game import Game
+
+class TestGame(unittest.TestCase):
+
+    def test_create4Room4BeastFM(self):
+        game = Game()
+        game.fabricarLaberinto4Habitaciones4BichosFM()
+        
+        # Check number of rooms
+        self.assertEqual(len(game.laberinto.hijos), 4)
+        self.assertEqual(len(game.bichos), 4)
+        
+        # Check connections between rooms
+        room1 = game.laberinto.obtenerHabitacion(1)
+        room2 = game.laberinto.obtenerHabitacion(2) 
+        room3 = game.laberinto.obtenerHabitacion(3)
+        room4 = game.laberinto.obtenerHabitacion(4)
+
+        
+        self.assertIs(room1.south, room2.north)
+        self.assertIs(room1.east, room3.west)
+        self.assertIs(room2.east, room4.west)
+        self.assertIs(room3.south, room4.north)
+        
+        # Check beast positions
+        self.assertTrue(game.bichos[0].posicion.esHabitacion)
+        self.assertTrue(game.bichos[1].posicion.esHabitacion)
+        self.assertTrue(game.bichos[2].posicion.esHabitacion)
+        self.assertTrue(game.bichos[3].posicion.esHabitacion)
+        
+        self.assertIs(game.bichos[0].posicion, room1)
+        self.assertIs(game.bichos[1].posicion, room2)
+        self.assertIs(game.bichos[2].posicion, room3)
+        self.assertIs(game.bichos[3].posicion, room4)
+        
+        self.assertTrue(game.bichos[0].esAgresivo())
+        self.assertTrue(game.bichos[1].esPerezoso())
+        self.assertTrue(game.bichos[2].esAgresivo())
+        self.assertTrue(game.bichos[3].esPerezoso())
+
+       
+if __name__ == '__main__':
+    unittest.main()

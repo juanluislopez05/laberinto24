@@ -1,8 +1,8 @@
 import random
 import time 
 class MapElement:
-    def __init__(self, padre):
-        self.padre=padre
+    def __init__(self):
+        pass
     def abrirPuertas(self):
         pass
     def cerrarPuertas(self):
@@ -103,7 +103,7 @@ class Room(Contenedor):
 
 class Maze(Contenedor):
     def __init__(self):
-        self.rooms = []
+        super().__init__()
     
     def addRoom(self, room):
         self.agregarHijo(room)
@@ -124,7 +124,7 @@ class Maze(Contenedor):
         return len(self.rooms)
         
     def obtenerHabitacion(self, id):
-    	for hab in self.hijos:
+        for hab in self.hijos:
             if hab.id == id:
                 return hab
         return None
@@ -147,23 +147,24 @@ class Decorator(Hoja):
 
 class Bomba(Decorator):
 
-  def __init__(self):
-    super().__init__()
-    self.activa = False
+    def __init__(self):
+        super().__init__()
+        self.activa = False
 
-  def activar(self):
-    self.activa = True
+    def activar(self):
+        self.activa = True
 
-  def print(self):
+    def print(self):
         print("Bomba")
 
-  def desactivar(self):
-    self.activa = False
+    def desactivar(self):
+        self.activa = False
 
-  def esBomba(self):
-    return True
+    def esBomba(self):
+        return True
 
-  def entrar(self, alguien):
+    def entrar(self, alguien):
+        
         print(alguien + " ha pisado una bomba")
 
   

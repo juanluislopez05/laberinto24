@@ -29,7 +29,7 @@ class Game:
     
     def agregarBicho(self, unBicho):
         self.bichos.append(unBicho)
-        unBicho.num=len(self.bichos)+1
+       # unBicho.num=len(self.bichos)+1
 
     def eliminarBicho(self, unBicho):
         if unBicho in self.bichos:
@@ -185,24 +185,28 @@ class Game:
         hab3.south = p34 
         hab4.north = p34
         
+        maze = Maze()
+        
         self.laberinto = self.create_maze()
         self.laberinto.addRoom(hab1)
         self.laberinto.addRoom(hab2)
         self.laberinto.addRoom(hab3)
         self.laberinto.addRoom(hab4)
 
-        bicho1=self.agregarBicho(self.fabricarBichoAgresivo(hab1))
-        bicho2=self.agregarBicho(self.fabricarBichoAgresivo(hab3))
+        self.maze = maze
+        
+        bicho1=self.fabricarBichoAgresivo(hab1)
+        bicho2=self.fabricarBichoAgresivo(hab3)
 
-        bicho3=self.agregarBicho(self.fabricarBichoPerezoso(hab2))
-        bicho4=self.agregarBicho(self.fabricarBichoPerezoso(hab4))
+        bicho3=self.fabricarBichoPerezoso(hab2)
+        bicho4=self.fabricarBichoPerezoso(hab4)
 
         self.agregarBicho(bicho1)
         self.agregarBicho(bicho2)
         self.agregarBicho(bicho3)
         self.agregarBicho(bicho4)
 
-        return self.maze
+        return maze
 
 
 
@@ -216,19 +220,19 @@ class BombedGame(Game):
 
 
 
-game= Game()
-game.make2RoomsMaze()
-game.maze.entrar()
+# game= Game()
+# game.make2RoomsMaze()
+# game.maze.entrar()
 
-game=Game()
-game.make2RoomsMazeFM() 
+# game=Game()
+# game.make2RoomsMazeFM() 
     
-game=BombedGame()
-game.make2RoomsMazeFM()
-game.maze.entrar() 
+# game=BombedGame()
+# game.make2RoomsMazeFM()
+# game.maze.entrar() 
 
-game=BombedGame()
-game.fabricarLaberinto2Habitaciones2BombasFM()
+# game=BombedGame()
+# game.fabricarLaberinto2Habitaciones2BombasFM()
 
-game= Game()
-game.fabricarLaberinto4Habitaciones4BichosFM()
+# game= Game()
+# game.fabricarLaberinto4Habitaciones4BichosFM()
