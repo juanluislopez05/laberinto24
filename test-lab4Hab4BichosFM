@@ -31,13 +31,13 @@ class TestGame(unittest.TestCase):
         self.assertTrue(game.bichos[3].posicion.esHabitacion)
         
         self.assertIs(game.bichos[0].posicion, room1)
-        self.assertIs(game.bichos[1].posicion, room2)
-        self.assertIs(game.bichos[2].posicion, room3)
+        self.assertIs(game.bichos[2].posicion, room2)
+        self.assertIs(game.bichos[1].posicion, room3)
         self.assertIs(game.bichos[3].posicion, room4)
         
         self.assertTrue(game.bichos[0].esAgresivo())
-        self.assertTrue(game.bichos[1].esPerezoso())
-        self.assertTrue(game.bichos[2].esAgresivo())
+        self.assertTrue(game.bichos[2].esPerezoso())
+        self.assertTrue(game.bichos[1].esAgresivo())
         self.assertTrue(game.bichos[3].esPerezoso())
 
        

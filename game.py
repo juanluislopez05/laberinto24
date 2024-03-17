@@ -161,17 +161,17 @@ class Game:
         p34 = self.create_door(hab3, hab4) 
         p24 = self.create_door(hab2, hab4)
 
-        p12.side1 = hab1
-        p12.side2 = hab2
+        # p12.side1 = hab1
+        # p12.side2 = hab2
         
-        p13.side1 = hab1 
-        p13.side2 = hab3
+        # p13.side1 = hab1 
+        # p13.side2 = hab3
         
-        p24.side1 = hab2
-        p24.side2 = hab4
+        # p24.side1 = hab2
+        # p24.side2 = hab4
         
-        p34.side1 = hab3
-        p34.side2 = hab4
+        # p34.side1 = hab3
+        # p34.side2 = hab4
 
         hab1.south = p12
         hab2.north = p12
@@ -179,8 +179,8 @@ class Game:
         hab1.east = p13
         hab3.west = p13
         
-        hab2.west = p24
-        hab4.east = p24
+        hab2.east = p24
+        hab4.west = p24
         
         hab3.south = p34 
         hab4.north = p34
