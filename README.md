@@ -35,19 +35,31 @@ Decorator es ahora subclase de Hoja
 
 Iterator prompt
 
--Añadir el metodo recorrer en MapElement y sus subclases 
+- Añadir el metodo recorrer en MapElement y sus subclases 
+- Este metodo en Contenedor consiste en recorrer todos sus hijos.
+- En el resto consiste en pasarle a unBloque, self.
 
 ---
 
 TemplateMethod prompt
 
+- Este método consiste en delegar la función `actua`de Bicho en Modo.
+- El método `actua`de Bicho consiste en llamar a otros metodos como `caminar`y `dormir`.
+- El método `caminar` consiste en llamar al método `caminarAleatorio` de Bicho.
+- El método `dormir`consiste en dormir el bicho durante 2 segundos.
 ---
 
 Singleton prompt
 
+- Este método se implementa mediante la inclusión de la clase Orientación y sus subclases Norte, Sur, Este y Oeste, de manera que se garantice que solo hay una única instancia de éstas.
 ---
 
 Builder prompt
+
+- Este método va aparte, con un import de las clases de Maze de laberinto.py
+- Tiene métodos como `leer_archivo` que nos permite leer los json que le vamos a pasar.
+- También métodos como `procesar`que se le pasa `leer_archivo`y `fabricar_laberinto`.
+- Otros métodos consiste en sobrescribir los de laberinto.py
 
     <div>
         <p>Builder prompt</p>
