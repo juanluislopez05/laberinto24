@@ -339,6 +339,41 @@ class Sur(Orientacion):
         unContenedor.sur.recorrer(unBloque)
     def caminar(self, alguien):
         alguien.irASur(self)
+class Forma:
+
+    def __init__(self):
+        self.orientaciones = []
+    
+    def recorrer(self, unBloque):
+        for each in self.orientaciones:
+            each.recorrer(unBloque, self)
+
+    def agregarOrientacion(self, unaOrientacion):
+        self.orientaciones.append(unaOrientacion)
+    
+    def ponerEn(self, unaOrientacion, unEM):
+        unaOrientacion.ponerElemento(unEM, self)
+
+class Cuadrado(Forma):
+
+    def __init__(self):
+        super().__init__()
+        self.norte = None 
+        self.sur = None
+        self.este = None
+        self.oeste = None
+
+    def irAlNorte(self, unBicho):
+        self.norte.entrar(unBicho)
+
+    def irAlSur(self, unBicho):
+        self.sur.entrar(unBicho)  
+
+    def irAlEste(self, unBicho):
+        self.este.entrar(unBicho)
+
+    def irAlOeste(self, unBicho):
+        self.oeste.entrar(unBicho)
         
 
 
