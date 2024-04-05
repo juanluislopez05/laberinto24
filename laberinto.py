@@ -374,7 +374,46 @@ class Cuadrado(Forma):
 
     def irAlOeste(self, unBicho):
         self.oeste.entrar(unBicho)
-        
+
+class Ente:
+
+  def __init__(self, juego):
+    self.poder = 0
+    self.posicion = None
+    self.vidas = 0
+    self.juego = juego
+
+  def estaVivo(self):
+    return self.vidas > 0
+  
+  def irAlEste(self):
+    self.posicion.irAlEste(self)
+
+  def irAlNorte(self):
+    self.posicion.irAlNorte(self)
+  
+  def irAlSur(self):
+    self.posicion.irAlSur(self)
+
+  def irAlOeste(self):
+    self.posicion.irAlOeste(self)
+
+class Personaje(Ente):
+  
+  def __init__(self, nombre, juego):
+    super().__init__(juego)
+    self.nombre = nombre
+    self.vidas = 10
+    self.poder = 1
+
+  def esAtacadoPor(self, unBicho):
+    self.vidas -= unBicho.poder
+    
+    if self.vidas <= 0:
+      print("Lo siento, " + self.nombre + " ha muerto")
+      self.juego.pararHilos()
+    else:
+      print(self.nombre + " es atacado, vidas restantes: " + str(self.vidas))
 
 
 
