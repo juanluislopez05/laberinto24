@@ -61,6 +61,15 @@ Builder prompt
 - También métodos como `procesar`que se le pasa `leer_archivo`y `fabricar_laberinto`.
 - Otros métodos consiste en sobrescribir los de laberinto.py
 
+---
+Proxy prompt 
+- En el caso de Proxy, lo hemos implementado a través de ElementoMapa (Subject), Tunel (Proxy) y Laberinto (RealSubject). 
+- En este caso, hemos usado el atributo laberinto para refererirnos a la clase homónima.
+
+---
+
+Adapter prompt
+- Este patrón no lo hemos incluido de momento en el laberinto
     <div>
         <p>Builder prompt</p>
     </div>
