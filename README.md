@@ -70,8 +70,17 @@ Proxy prompt
 
 Adapter prompt
 - Este patrón no lo hemos incluido de momento en el laberinto
-    <div>
-        <p>Builder prompt</p>
-    </div>
+---
+Bridge prompt
+- Este patrón lo hemos incluido mediante la inclusión de la clase Forma y su subclase Cuadrado
+- Forma cuenta con el atributo orientaciones y los metodos recorrer, agregarOrientacion y ponerEn que ya hemos tratado en otras clasles
+- Cuadrado cuenta con los atributos norte sur este y oeste y los respetivos metodos irAlNorte, irAlSur, irAlEste y irAlOeste
+---
+Mediator prompt
+- Este patrón lo hemos implementado mediante la clase Ente que es superclase de Bicho y la nueva clase Personaje.
+- Hay que tener en cuenta que Juego cuenta con bichos y personajes como variables.
+- Ente cuenta con los atributos poder posicion vidas juego.
+- Personaje cuenta con el atributo nombre e inicializa vidas a 10 y poder a 1. Cuenta tambien con el metodo esAtacadoPor.
+- Ente tiene el metodo estaVivo que devuelve true si vidas>0 y irAlEste, irAlNorte, irAlSsur e irAlOeste.
 </body>
 </html>
