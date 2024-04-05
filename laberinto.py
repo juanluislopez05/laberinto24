@@ -144,6 +144,22 @@ class Decorator(Hoja):
         self.component = None 
     def print(self):
         print("Decorador")
+class Tunel(Hoja):
+
+    def __init__(self, laberinto):
+        self.laberinto = laberinto
+    
+    def print(self):
+        print("Tunel")
+    
+    def entrar(self, alguien):
+        # fabricar el nuevo laberinto
+        nuevo_laberinto = Maze()
+        
+        # introducir a alguien en ese nuevo laberinto
+        nuevo_laberinto.entrar(alguien)
+        
+        print(str(alguien) + " accede al nuevo laberinto")
 
 class Bomba(Decorator):
 
@@ -323,6 +339,7 @@ class Sur(Orientacion):
         unContenedor.sur.recorrer(unBloque)
     def caminar(self, alguien):
         alguien.irASur(self)
+        
 
 
 
